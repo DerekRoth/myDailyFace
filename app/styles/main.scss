@@ -1,0 +1,140 @@
+body {
+  height: 480px;
+  width: 320px;
+  position: relative;
+}
+@keyframes rightToCurrent {
+  0%   { transform: translateX(100%); }
+  100% { transform: translateX(0); }
+}
+@keyframes currentToRight {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(100%); }
+}
+@keyframes bottomToCurrent {
+  0%   { transform: translateY(100%); }
+  100% { transform: translateY(0); }
+}
+@keyframes currentToBottom {
+  0%   { transform: translateY(0); }
+  100% { transform: translateY(100%); }
+}
+
+#main {
+  outline: 1px solid blue;
+}
+#config-markers {
+  outline: 1px solid green;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+#camera2 {
+  outline: 1px solid yellow;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+#viewer {
+  outline: 1px solid deeppink;
+}
+body {
+  margin: 0;
+  padding: 0;
+}
+#main {
+  [role="tablist"] {
+    top: 50px;
+    bottom: 0;
+    height: auto;
+  }
+}
+
+[role="tablist"] > [role="tab"] {
+  background-color: black;
+  .icon:before {
+    display: inline-block;
+    position: static;
+    vertical-align: middle;
+  }
+}
+
+section[role="region"] {
+  top: 0;
+  left: 0;
+  &[data-position="right"] {
+    transform: translateX(100%);
+    &.current {
+      animation: rightToCurrent 0.4s forwards;
+    }
+    &.right {
+      animation: currentToRight 0.4s forwards;
+    }
+  }
+  &[data-position="bottom"] {
+    transform: translateY(100%);
+    &.current {
+      animation: bottomToCurrent 0.4s forwards;
+    }
+    &.bottom {
+      animation: currentToBottom 0.4s forwards;
+    }
+  }
+}
+
+.mirror video, .mirror canvas {
+  transform: scale(-1, 1);
+  -webkit-transform: scale(-1, 1);
+}
+div.video {
+  position: relative;
+  line-height: 0;
+
+  video {
+    max-width: 100%;
+    height: auto;
+  }
+  canvas {
+    z-index: 1;
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+  }
+}
+
+.pictures {
+  li {
+    width: 100px;
+    display: inline-block;
+
+    a {
+      display: block;
+
+      img {
+        max-width: 100%;
+        display: block;
+      }
+    }
+  }
+}
+
+.detail {
+  img {
+    max-width: 100%;
+  }
+}
+
+.markers {
+  position: relative;
+
+  img {
+    max-width: 100%;
+  }
+  canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+}

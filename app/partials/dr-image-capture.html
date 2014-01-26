@@ -1,0 +1,11 @@
+<input type="file" accept="image/*" ng-hide="isPlaying">
+
+<div class="user-media">
+    <div class="video" ng-show="isPlaying">
+        <video></video>
+        <canvas ng-show="preview"></canvas>
+    </div>
+
+    <button ng-click="takeSnapshot()" ng-hide="preview">Shoot !</button>
+    <button ng-click="retake()" ng-show="preview">Retake</button>
+</div>

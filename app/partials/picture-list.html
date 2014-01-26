@@ -1,0 +1,9 @@
+<ul class="pictures">
+    <li ng-repeat="picture in pictures | orderBy:'date':false">
+        <a href="#/picture/{{$index}}">
+            <img ng-src="{{picture.objectUrl}}">
+            {{picture.date | date:'d/M/yyyy H:m'}}
+        </a>
+        <button ng-click="delete($index)">X</button>
+    </li>
+</ul>

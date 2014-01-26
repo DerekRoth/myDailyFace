@@ -1,0 +1,6 @@
+<div class="detail">
+    <img ng-src="{{picture.objectUrl}}" alt=""/>
+    {{picture.date | date:'d/M/yyyy H:m'}}
+    <button ng-click="delete($index)">Delete</button>
+    <button ng-click="back()"><- Back</button>
+</div>

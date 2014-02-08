@@ -63,24 +63,24 @@ angular.module('dr.imageCapture', [])
         var mousemove = function (event) {
           $scope.$apply(function () {
             switch (grabbed) {
-              case 'eyes':
-                $scope.ngModel.eyesBar = event.clientY;
-                break;
+            case 'eyes':
+              $scope.ngModel.eyesBar = event.clientY;
+              break;
 
-              case 'mouth':
-                $scope.ngModel.mouthBar = event.clientY;
-                break;
+            case 'mouth':
+              $scope.ngModel.mouthBar = event.clientY;
+              break;
 
-              case 'vertical':
-                $scope.ngModel.verticalBar = event.clientX;
-                break;
+            case 'vertical':
+              $scope.ngModel.verticalBar = event.clientX;
+              break;
             }
           });
 
           drawBars();
         };
 
-        var mouseup = function (event) {
+        var mouseup = function () {
           canvas.off('mousemove', mousemove);
           canvas.off('mouseup', mouseup);
           grabbed = null;
@@ -88,15 +88,18 @@ angular.module('dr.imageCapture', [])
 
         var mousedown = function (event) {
 
-          if (event.clientY < $scope.ngModel.eyesBar + 5 && event.clientY > $scope.ngModel.eyesBar - 5) {
+          if (event.clientY < $scope.ngModel.eyesBar + 5 &&
+          event.clientY > $scope.ngModel.eyesBar - 5) {
             grabbed = 'eyes';
           }
 
-          if (event.clientY < $scope.ngModel.mouthBar + 5 && event.clientY > $scope.ngModel.mouthBar - 5) {
+          if (event.clientY < $scope.ngModel.mouthBar + 5 &&
+          event.clientY > $scope.ngModel.mouthBar - 5) {
             grabbed = 'mouth';
           }
 
-          if (event.clientX < $scope.ngModel.verticalBar + 5 && event.clientX > $scope.ngModel.verticalBar - 5) {
+          if (event.clientX < $scope.ngModel.verticalBar + 5 &&
+          event.clientX > $scope.ngModel.verticalBar - 5) {
             grabbed = 'vertical';
           }
 

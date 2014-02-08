@@ -99,8 +99,8 @@ myDailyFaceControllers.controller(
 
 myDailyFaceControllers.controller(
   'MarkersController',
-  ['$scope', 'facesRepository', 'configRepository', '$q',
-  function ($scope, facesRepository, configRepository, $q) {
+  ['$scope', 'facesRepository', 'configRepository', '$q', '$location',
+  function ($scope, facesRepository, configRepository, $q, $location) {
     $q.when(facesRepository.get(0)).then(function (result) {
       $scope.bgPicture = window.URL.createObjectURL(result.file);
     });
@@ -108,4 +108,14 @@ myDailyFaceControllers.controller(
     $q.when(configRepository.get('markersCoordinates')).then(function (result) {
       $scope.markersCoordinates = result;
     });
+
+    $scope.save = function () {
+      configRepository.set('markersCoordinates', $scope.markersCoordinates)
+        .then(function (result) {
+        // @TODO: display notification
+        console.log(result);
+      });
+
+      $location.path('/config');
+    };
   }]);

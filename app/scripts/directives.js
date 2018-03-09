@@ -143,43 +143,27 @@ angular.module('dr.imageCapture', [])
         var onStream = function (stream) {
 
           videoStream = stream;
-          videoElement.attr('src', window.URL.createObjectURL(stream));
+          videoElement[0].srcObject = videoStream;
+          $scope.isPlaying = false;
 
           videoElement[0].addEventListener('canplay', function () {
-            videoElement[0].play();
+            if (!$scope.isPlaying && videoElement[0].videoWidth > 0) {
+              width = videoElement[0].videoWidth;
+              height = videoElement[0].videoHeight;
+
+              videoElement.attr('width', width);
+              videoElement.attr('height', height);
+
+              canvasElement.attr('width', width);
+              canvasElement.attr('height', height);
+
+              $scope.$apply(function () {
+                $scope.isPlaying = true;
+              });
+            }
           });
 
-          videoElement[0].addEventListener('loadeddata', function () {
-            // Firefox has a problem with the video width calculation;
-            // the value is only available after some time.
-            // See https://bugzilla.mozilla.org/show_bug.cgi?id=926753
-            var hackIterations = 0;
-            var hackInterval = setInterval(function () {
-              hackIterations++;
-
-              // Avoid infinite loop in case of a problem with the video
-              if (hackIterations > 1000) {
-                clearInterval(hackInterval);
-              }
-
-              if (!$scope.isPlaying && videoElement[0].videoWidth > 0) {
-                width = videoElement[0].videoWidth;
-                height = videoElement[0].videoHeight;
-
-                videoElement.attr('width', width);
-                videoElement.attr('height', height);
-
-                canvasElement.attr('width', width);
-                canvasElement.attr('height', height);
-
-                //clearInterval(hackInterval);
-
-                $scope.$apply(function () {
-                  $scope.isPlaying = true;
-                });
-              }
-            }, 100);
-          });
+          videoElement[0].play();
         };
 
         var onStreamError = function (error) {
@@ -192,10 +176,14 @@ angular.module('dr.imageCapture', [])
         };
 
         var stopStream = function () {
-          videoElement.src = null;
+          //videoElement.src = null;
+          videoElement.srcObject = null;
 
           if (videoStream) {
-            videoStream.stop();
+            for (var track in videoStream.getTracks()) {
+              videoStream.getTracks()[track].stop();
+            }
+            //videoStream.stop();
             videoStream = null;
             $scope.isPlaying = false;
           }
@@ -229,14 +217,14 @@ angular.module('dr.imageCapture', [])
           $scope.preview = false;
         };
 
-        navigator.getUserMedia(
-          {
+        var constraints = {
             video: true,
             audio: false
-          },
-          onStream,
-          onStreamError
-        );
+          };
+
+        navigator.mediaDevices.getUserMedia(constraints)
+          .then(onStream)
+          .catch(onStreamError);
       }
     };
   });

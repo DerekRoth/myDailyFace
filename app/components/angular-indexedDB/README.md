@@ -3,15 +3,17 @@ angular-indexedDB
 
 An angularjs serviceprovider to utilize indexedDB with angular
 
+####Important: This repository isn't maintained by me anymore. Look [over here](https://github.com/bramski/angular-indexedDB) for current versions, as [Bram Whillock](https://github.com/bramski) took over as main contributor.
+
 ## Installation
 
 For installation the use of Bower is recommended.
 
 ### Bower
-Call the following command on your command line: 
+Call the following command on your command line:
 
 ```sh
-bower install git@github.com:webcss/angular-indexedDB.git --save
+bower install --save angularjs-indexedDB
 ```
 
 And add the following line to your html file, for example `index.html`:
@@ -83,7 +85,7 @@ angular.module('myModuleName')
    * find all persons older than 40 years
    */
    
-   var myQuery = $indexedDB.queryBuilder.$index('age_idx').$gt(40).$asc.compile;
+   var myQuery = $indexedDB.queryBuilder().$index('age_idx').$gt(40).$asc.compile();
    myObjectStore.each(myQuery).then(function(cursor){
      cursor.key;
      cursor.value;
@@ -95,6 +97,10 @@ angular.module('myModuleName')
 QueryBuilder aka IDBKeyRange maybe needs some revision.
 This is all the info you get for now, for more read the code, it's ndoc-annotated! 
 
-Important note: that this software is in alpha state and therefore it's used at your own risk,
+Important note: this software is in alpha state and therefore it's used at your own risk,
 don't make me liable for any damages or loss of data!
+
+Status Update: I'm sorry to say that I've abandoned angularJS for now and therefore have no plans for features or updates. This may change in the future. Apart from that I will apply updates submitted as pull requests when I find the time and see use.
+
+Anyone willing to join as active developer is welcome to drop me a note and help keep this project alive.
 
